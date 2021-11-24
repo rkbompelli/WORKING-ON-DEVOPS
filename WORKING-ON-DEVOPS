@@ -1,0 +1,680 @@
+WORKING ON GIT--------------------------------------------------------------------------------------------------------------------------------
+
+mkdir RK -----[to make a new directory]
+git config --global user.name "ravikanth" -----[to let know the user-name to the git only one time after the installation]
+git config --global user.email "rkbompelli" -----[to let know the user-email to the git only one time after the installation]
+git config --global alias.ANYNAME "log --oneline --graph --all" -----[to assign any long command with a shorter one]
+git init -----[initialize the git in the dir.]
+vim file.py -----[to create and edit file]
+git status -----[to check the status of the file]
+git add file.py -----[to add the file on to staging area]
+git add . -----[to add all the files on to staging area]
+git commit -m "commit message" -----[to commit all the changes]
+git checkout -- . -----[removes the uncommited changes]
+git log -----[shows the commits made]
+git log --oneline -----[shows the commits made in single line]
+git log --oneline --graph -----[shows the commits made in single line with graph]
+git log --oneline --graph --all -----[shows all the commits made in single line with graph]
+git log --oneline BrnchNm  -----[shows all the commits made of specific branch]
+git ls-files -----[shows all the files in git]
+git reset --hard cmitID -----[to move back to the specific commit]
+git branch -----[to check all the branch]
+git branch BrnchNm -----[to create a new branch]
+git checkout BrnchNm -----[to enter the branch]
+git checkout -b BrnchNm -----[to create and enter the new branch]
+git checkout -b BrnchNm -----[to create and enter the new branch]
+git branch -d BrnchNm -----[to delete branch]
+git merge BrnchNm -----[merges active branch with the branch name specified]
+git merge BrnchNm BrnchNm -----[merges specified branches]
+git remote add origin GitHublink -----[lays connection between the local and remote repo.]
+git remote -----[shows the remote link name]
+git push -u origin master -----[pushes the commit from local to remote repo.]
+git clone GitHubLink -----[to clone a remote repo. into local repo. in new folder]
+git branch -r -----[to check the remote branches]
+git checkout origin/master -----[checkout to master branch in remote]
+git fetch -----[fetches the data]
+git pull origin master -----[pulls the commit from remote to local repo.] (fetch + merge)
+git stash -----[applies stash on uncommitted commits]
+git stash apply -----[applies stashed commits]
+git stash apply 1 -----[applies specific stashed commits]
+git stash push -m "stash message" -----[applies stash on uncommitted commits with a comment]
+git stash drop 1 -----[deletes the specific stashed commits]
+git stash pop 2 -----[applies and deletes stashed commits]
+git stash clear -----[clears all stashed commits]
+git rebase master -----[rebases the master branch with the active branch]
+git rebase -i CmitID -----[to delete specific commit]
+git diff filename -----[shows the difference between the working dir. and staging area]
+git diff HEAD filename -----[shows the difference between the working dir. and commited file]
+git diff --staged HEAD filename -----[shows the difference between the staging area and working dir.]
+git diff commitID filename -----[shows the difference between the commitid and staging area]
+git rm fiename -----[to remove the file from the staging area and working dir.]
+git rm -r -----[to remove all files from the staging area  and working dir.]
+git rm --cached stash -----[to remove all files from the staging area]
+vim .gitignore -----[add files and dir. to be ignored]
+  *.txt-----[to ignore all the txt files]
+  dirname/-----[to ignore any folder]
+  /filename[to ignore files in only in current dir.]
+git tag TagName(v1.0) -----[to give the tag to the head commit]
+git tag -----[lists the tags given]
+git tag v2.0 f2067b1 -----[gives tag to specific commit]
+git diff v1.0 v2.0 -----[shows the difference between the two tags]
+git tag -d v2.0 -----[delets the tag]
+git cherry-pick commitidOFotherbranch  -----[gives the commit ID of the other branch to the active branch ]
+git cherry-pick commitidOFotherbranch -n -----[not just commit, just in w.d]
+
+
+DOKCER INSTALLATION-------------------------------------------------------------------------------------------------------------------------------
+
+
+first update-----yum update -y-----apt-get update -y
+yum/apt-get install docker.io -y-----[to install docker on lincx] // amazon-linux-extras install docker
+
+DOKCER SERVICE CMNDS
+
+
+service docker status-----[to check whether the docker engine status]
+service docker start-----[to start the docker engine]
+service docker stop-----[to stop the docker engine]
+service docker reload-----[to restart the docker engine]
+
+DOCKER BASIC COMMANDS
+
+
+docker search centos-----[to search images on docker hub/ registry]
+docker pull centos-----[to pull images from docker hub]
+docker images / docker images ls-----[to check no.of images in docker]
+docker ps-----[shows all the running containers]
+docker ps -a-----[shows all the containers]
+docker ps -f "status=exited"-----[shows only the stopped containers]
+docker ps -f "status=pused"-----[shows only the paused containers]
+docker info-----[shows the information of the all containers]
+
+docker run -it ubuntu /bin/bash-----[to run the image and createa new container]---(i=interactive mode and t-terminal)
+docker run -it --name cont1 ubuntu /bin/bash-----[to run the image and createa new container with a container name]
+docker start cont1-----[to start the container]
+docker top cont1-----[to check the running process in the container]
+docker stop cont1-----[to stop the container]
+docker attach cont1-----[to go into the container running process]
+
+docker rm cont1-----[to delete the container]
+docker rmi -f img1-----[to delete the image]
+docker stop $(docker ps -a -q)-----[to stop all the running containers]
+docker rm $(docker ps -a -q)-----[to delete all the containers]
+docker rmi -f $(docker images -q)-----[to delete all the containers]
+
+docker diff contid-----[to show all the changes made in the container]
+docker commit contid imgname-----[to create a new images from the container]
+
+DOCKERFILE
+
+
+DOCKER-COMPONENTS-------------
+FROM-----the base images, must be on top off the Dockerfile
+RUN-----to execute commands it create layer in image
+MAINTAINER-----author/owner description
+COPY-----copies files from the local system need to provide the source and destination
+ADD-----similar to COPY but also proovides a feature to download fiels from internet and also extract the fiels
+EXPOSE-----to expose the port containter to container
+WORKDIR-----to set the working directory to the container
+CMD-----executes the comamnd but during th container creation 
+ENTRYPOINT-----similar to the CMD ut has the higher priority than CMD, first ENTRYPOINT cmds will be executed over CMD
+ENV-----environment variables
+ARG-----to define the naem of a parmeter and its default value
+
+PROCESS
+
+
+vim Dockerfile
+  FROM ubuntu
+  RUN echo "this is RK" >  /tmp/tempfile-----[save and exit :wq!]
+docker build -t img1 . -----[to create a docker images from the Dockerfile]-----after run this image to create the container
+
+vim Dockerfile
+  FROM ubuntu
+  WORKDIR /tmp
+  RUN echo "this is RK" >  /tmp/tempfile
+  ENV my name is ravikanth
+  COPY testfile /tmp
+  ADD test.tar.gz /tmp
+  
+touch testfiel test
+tar -cvf test.tar test
+gzip test.tar
+docker build -t img2 . -----[to create a docker images from the Dockerfile]-----after run this image to create the container
+
+DOCKER-VOLUMES
+
+
+docker volume ls-----[to check all the volumes]
+docker volume create-----[to create the new volume]
+docker volume rm volanm-----[to delete the volume]
+docker volume prune-----[to remove all the unused volumes]
+docker volume inspect volnm-----[to check the details of the volume]
+docker container inspect contnm-----[to check the details of the container]
+docker image inspect img1-----[to check the details of the image]
+
+vim Dockerfile
+  FROM ubuntu
+  VOLUME ["/myvolume"]-----[save and exit :wq!]
+docker build -t img3 . -----[to create a docker images from the Dockerfile]-----after run this image to create the container
+docker run -it --name contvs --privileged=true --volumes-from contv imgv /bin/bash-----[TO SHARE A VOLUME WITH CONTAINER]
+
+
+CREATING A DOCKER-VOLUME BY CLI
+
+docker run -it --name contcv -v /vol img1 /bin/bash
+docker run -it --name contcv1 --privileged=true --volumes-from contcv img1 /bin/bash
+
+CREATING A DOCKER-VOLUME TO HOST-------------
+
+docker run -it --name conth -v /home/ec2-user:/voldir ubuntu /bin/bash-----[TO SHARE A VOLUME WITH CONTAINER TO HOST]
+
+DOCKER PORT EXPORT
+
+
+docker run -td --name contp -p 80:80 ubuntu-----[to create and run cotainer but not goes into the container and publish the port]
+docker exec -it contp /bin/bash-----[go inside the container and creates a new process]
+docker port contp-----[to check the port assigned to the container]
+
+apt-get update
+apt-get install apcahe2 -y
+cd /var/www/html
+echo "THIS IS RAVIKANTH" > index.html
+service apache2 start
+-----now copy the public ip of the ec2 instance and open a new tab in browser and paste the ip to see the message
+
+DOCKERHUB AND IMAGE PUSH
+
+
+docker login ------[logins to the dockerhu/registry account need to specify the login details]
+docker tag img1 rkbompelli/dockerimg-----[dcoker profile name/ docker new image name]
+docker push rkbompelli/dcokerimg-----[to push the image on to the dockerhub]
+
+DOCKER-COMPOSE
+
+
+: tool for defining & running multi-container docker applications
+: use yaml files to configure application services (docker-compose.yml)
+: can start all services with a single command : docker compose up
+: can stop all services with a single command : docker compose down
+: can scale up selected services when required
+Step 1 : install docker compose
+   (already installed on windows and mac with docker)
+   docker-compose -v
+   2 Ways
+   1.  https://github.com/docker/compose/rel...
+   2. Using PIP
+    yum install python-pip
+    pip install -U docker-compose
+    
+vim docker-compose.yml -----[Create docker compose file at any location on your system]
+  version :'3' -----[for latest and compatible version- https://docs.docker.com/compose/compose-file/]
+  services: 
+    web: 
+      image: nginx
+    databse:
+      image: redis -----[:wq! save the file and exit]
+      
+docker-compose config -----[Check the validity of file by command]  (works only in the file located dir.)
+docker-compose up -d -----[Run docker-compose.yml file]
+docker-compose down -----[Bring down application]
+docker-compose up -d --scale database=4 -----[ to scale services]
+
+DOCKER-SWARM
+
+docker swarm is a tool for container Orchestratation
+lets take an example
+we have 100 containers
+ you need to do
+ -health check on every container
+ -endure all containers are up on every system
+ -scaling all the containers up or down depending on the load
+ -adding updates/changes to all containers
+Orchestratation = managing and controlling multiple containers as a single service
+tools available are DOCKER SWARM, KUBERNETES, APACHE MESOS
+
+Pre-requisites
+1. Docker 1.13 or higher
+2. Docker Machine (pre installed for Docker for Windows and Docker for Mac)https://docs.docker.com/machine/insta...
+https://docs.docker.com/get-started/p...
+
+Step 1 :  Create Docker machines (to act as nodes for Docker Swarm)   Create one machine as manager and others as workers
+    -----docker-machine create --driver hyperv manager1
+    -----docker-machine create --driver virtualbox manager1
+
+   docker-machine:Error with pre-create check: “exit status 126”
+   https://stackoverflow.com/questions/3...
+   brew cask install virtualbox;
+
+   Create one manager machine
+   and other worker machines
+
+Step 2 :  Check machine created successfully
+    -----docker-machine ls
+    -----docker-machine ip manager1
+
+Step 3 :  SSH (connect) to docker machine
+    -----docker-machine ssh manager1
+
+Step 4 :  Initialize Docker Swarm    
+    -----docker swarm init --advertise-addr MANAGER_IP
+    -----docker node ls
+    (this command will work only in swarm manager and not in worker)
+    
+Step 5 :  Join workers in the swarm
+    Get command for joining as worker
+    In manager node run command
+    -----docker swarm join-token worker
+    This will give command to join swarm as worker / copy
+
+    SSH into worker node (machine) and paste command to join swarm as worker
+   
+    In Manager Run command ----- docker node ls to verify worker is registered and is ready
+  
+    Do this for all worker machines
+
+Step 6 :  On manager run standard docker commands
+    -----docker info
+    check the swarm section 
+    no of manager, nodes etc
+
+    Now check docker swarm command options 
+    -----docker swarm 
+
+Step 7 :  Run containers on Docker Swarm
+    ----- docker service create --replicas 3 -p 80:80 --name serviceName nginx
+    Check the status:
+    ----- docker service ls
+    ----- docker service ps serviceName
+    Check the service running on all nodes
+    Check on the browser by giving ip for all nodes
+    
+Step 8 :  Scale service up and down
+   On manager node 
+   -----docker service scale serviceName=2
+
+  Inspecting Nodes (this command can run only on manager node)
+  -----docker node inspect nodename
+  -----docker node inspect self
+  -----docker node inspect worker1
+
+
+Step 9 :  Update service
+   -----docker service update --image imagename:version web
+   -----docker service update --image nginx:1.14.0 serviceName
+
+Step 10 : Shutdown node
+   -----docker node update --availability drain worker1
+
+Step 11 :  Remove service
+   -----docker service rm serviceName
+   -----docker swarm leave : to leave the swarm
+   -----docker-machine stop machineName : to stop the machine
+   -----docker-machine rm machineName : to remove the machine
+
+
+ANSIBLE INSTALLATION-----------------------------------------------------------------------------------------------------------------------------
+
+after creating 3 instance of anisble-server, ansibel-node1 and andible-node2 login and
+on ansible server
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install epel-release-latest-7.noarch.rpm -y
+yum install ansible -y   [this stage we can also install: git python python-level python-pip]
+
+
+vim /etc/ansible/hosts
+    # Ex 1: Ungrouped hosts, specify before any group headers............under this line add this
+    [demo].........group name any
+    18.222.46.58...........node1 ip of first instance
+    3.144.161.107...........node2 ip of second instance
+
+        
+this wont works untill changes made in main config file
+vim /etc/ansible/ansible.cfg
+    inventory      = /etc/ansible/hosts..........[add this under # some basic default values...]
+    sudo_user      = root
+    
+
+we cannot give access to nodes as a root user need to create new user in all 3 nodes.....
+useradd ansible
+passwd ansible
+
+add the ansible user to sudores file
+visudo
+ansible ALL=(ALL)       NOPASSWD: ALL  [add this under..root ALL=(ALL) ALL] ----do this in all nodes
+
+now to give permissions to the user update sshd_config fiel
+vim /etc/ssh/sshd_config
+PermitRootLogin yes   [uncomment this]
+PasswordAuthentication yes   [uncomment this]
+#PasswordAuthentication no   [comment this
+
+service sshd restart
+
+to stop asking password every time node logins.......
+on ansible-server
+su - ansible
+ssh-keygen
+press enter 3 times
+ls -a
+cd .ssh/
+ls     ....[here u will see two keys pvt and pub]
+ssh-copy-id -f usernameof-node1@172.31.47.88[pvt ip of node1]
+do the above step for all nodes
+cd ..
+
+and login to nodes
+ssh pub.ip of node
+WORKING ON ANSIBLE
+
+HOST-PATTERNS
+
+ansible all --list-hosts   ..........shows all hosts of all grouops
+ansible demo --list-hosts  ..........shows all hosts of demo group
+ansible demo[0] --list-hosts  ..........shows 1 hosts of demo group
+ansible demo[1] --list-hosts  ..........shows 2 hosts of demo group  [2.... 3.... ]
+ansible demo[-1] --list-hosts  ..........shows last hosts of demo group  [-2 ..-3...]
+ansible demo[0:1] --list-hosts   ..........shows all hosts of demo group with in the range
+
+AD-HOC COMMANDS
+
+su - ansible  [login in all 3 nodes]
+ansible all -a "ls"    [on server node]----shows all fies on all groups nodes [-a is argumtent which executes the commands in " "]
+ansible demo -a "ls"    [on server node]----shows all fies on demo group nodes
+ansible all -a "ls -la"    shows all fies and hidden fiels on all groups nodes
+ansible demo -a "ls -la"    shows all fies and hidden fiels on demo group nodes
+ansible demo[0] -a "touch file"    [to create a fiel on node1]
+ansible demo[1] -a "touch file"    [to create a file on node2]
+ansible all -a "touch adhoc"       [to create a file on all nodes]
+ansible demo -a "sudo yum install tree -y"    [to install tree on demo group nodes]
+ansible demo -ba "yum install tree -y"    [to install tree on all group nodes without sudo]
+ansible demo -ba "yum remove tree -y"    [to remove tree on all group nodes without sudo]
+
+MODULES
+
+ansible demo -b -m yum -a "pkg=httpd state=present"   [to install httpd on all demo group nodes] ...[-b=sudo ...-m=module....-a=argument]
+      state=present[install]......it is not mandotary to specify the present to install,,, but to remove or update need to specify absent and latest
+      state=absent[remove]
+      state=latest[update]
+ansible demo -b -m yum -a "pkg=httpd state=latest"   [to update httpd on all demo group nodes]
+ansible demo -b -m yum -a "pkg=httpd state=absent"   [to remove httpd on all demo group nodes]
+    to check the service of httpd on all nodes
+    sudo service httpd status
+ansible demo -b -m service -a "pkg=httpd state=started"   [to start httpd on all demo group nodes]
+ansible demo -b -m service -a "pkg=httpd state=stop"   [to start httpd on all demo group nodes]
+ansible demo -b -m user -a "name=raj"   [to create a new user raj on all demo group nodes]
+    to check the created user go to the user and.....cat /etccat /etc/passwd
+ansible demo -b -m user -a "name=raj state=absent"   [to delete user raj on all demo group nodes]
+ansible demo -b -m copy -a "src=file1 dest=/tmp"   [to copy file1 from demo group to /tmp directory of every node in group]
+
+
+SETUP
+
+ansible demo -m setup  [to get the information of the node]
+ansible demo -m setup -a "filter=*ipv4*"  [to get the ip adress of the node]
+
+PLAYBOOK
+
+----on server node create a yml file
+vim target.yml  [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  gather_facts: yes  [save the file and exit (esc :wq! enter) ]
+ansible-playbook target.yml    [to execute the playbook]
+
+TASKS
+
+-----now create a task.yml on server node
+vim task.yml     [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks: 
+       - name: install httpd on linux   [any message]
+         action: yum name=httpd state=installed (or present=installed and name=pkg)    [save the file and exit (esc :wq! enter) ]
+  ansible-playbook task.yml
+  
+VARIABLES
+  
+-----now create a var.yml on server node
+vim var.yml     [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars: 
+      pkgname: httpd
+  tasks: 
+      - name: to install HTTPD on server
+        action: yum pkg='{{pkgname}}' state=present      [save the file and exit (esc :wq! enter) ]
+ansible-playbook var.yml
+
+HANDLERS-----------Exactly the same as a task but run when another task is runned dependent on another task
+
+-----now create a handl.yml on server node
+vim handl.yml     [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars: 
+      pkgname: httpd
+  tasks: 
+      - name: to install HTTPD on server
+        action: yum pkg='{{pkgname}}' state=present
+        notify: restart httpd
+  handlers: 
+      - name: restart httpd
+        action: service pkg=httpd state=restarted      [save the file and exit (esc :wq! enter) ]
+ansible-playbook handl.yml
+
+DRY-RUN---------------TO CHECK WHETHER THE PLAYBOOK WORKS FINE
+ansible-playbook handl.ymL --check
+
+LOOPS----------------REPEATED WORK
+
+-----now create a loops.yml on server node
+vim loops.yml     [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks: 
+      - name: to add list of users
+        user: name='{{item}}' state=present
+        with_items: 
+            - ravikanth
+            - praveen
+            - prashanth
+            - shiva
+            - deepak     [save the file and exit (esc :wq! enter) ]
+  ansible-playbook loops.yml
+  to check the usrs created go to the nodes and type--- cat /etc/passwd
+  
+CONDITIONS----------------DIFERENT SECENARIOS
+
+vim cond.yml     [and paste the below code]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+          - name: to install apache on Debiaan linux
+            command: apt-get -y install apache
+            when: ansible_os_family == 'Debian'
+          - name: to install apache on RedHat linux
+            command: yum -y install httpd        [apche2 for Debian and httpd for RedHat/same]
+            when: ansible_os_family == 'RedHat'
+  [save the file and exit (esc :wq! enter) ]
+ansible-playbook cond.yml
+  
+VAULT:----------sensitive data such as passwords or keys in enxrypted files
+
+ansible-vault create vault.yml  [to create a vault file eith encryption]
+---
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+          - name: to install apache on Debiaan linux
+            command: apt-get -y install apache
+            when: ansible_os_family == 'Debian'
+          - name: to install apache on RedHat linux
+            command: yum -y install httpd        [apche2 for Debian and httpd for RedHat/same]
+            when: ansible_os_family == 'RedHat'   [save the file and exit (esc :wq! enter) ]
+ansible-playbook vault.yml
+
+ansible-vault view vault.yml    [to view the encrypted file vault.yml]
+ansible-vault edit vault.yml    [to edit the encrypted file vault.yml]
+ansible-vault rekey vault.yml    [to edit the encrypted file password vault.yml]
+ansible-vault encrypt target.yml    [to encrypt the already created fiel target.yml]
+ansible-vault decrypt vault.yml    [to decrypt file vault.yml]
+
+ROLES-------2 TECHNIQUES FOR REUSING OF TASKS: INCLUDE AND ROLES--TO SPLIT PLAYBOOK TASKS, HANDLERS, VARS, ON TO DIFFERENT FILES
+
+On server node move to [cd /etc/ansible]---ls 
+cd roles
+ansible-galaxy init nameOFrole -----[to intialalize the role dir.]
+tree nameOFrole
+nameOFrole
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+8 directories, 8 files
+
+vim tasks/main.yml -----[Create ansible tasks]
+- name: copy motd file
+  template:
+     src: templates/motd.j2
+     dest: /etc/motd
+     owner: root
+     group: root
+     mode: 0444
+
+vim templates/motd.j2 -----[Create ansible template]
+Welcome to {{ ansible_hostname }}
+This file was created on {{ ansible_date_time.date }}
+Go away if you have no business being here
+Contact {{ system_manager }} if anything is wrong
+
+vim defaults/main.yml -----[Create ansible variables]
+---
+# defaults file for motd
+system_manager: admin@golinuxcloud.com
+
+vim nameOFrole.yml -----[Create ansible role playbook]
+---
+- name: use motd role playbook
+  hosts: server1.example.com
+  user: ansible
+  become: true
+  roles:
+    - role: motd
+      system_manager: admin@golinuxcloud.com
+      
+ansible-playbook nameOFrole.yml -----[deploy ansilbe playbook rules]
+
+cat /etc/nameOFrole -----[verification]
+
+
+NAGIOS INSTALLATION-------------------------------------------------------------------------------------------------------------------------------
+
+After creating the ec2 instance with ssh, all traffic ports then login to ec2-user in CLI
+
+sudo su
+
+---now install all the pre-requists
+yum install httpd php -y -----[to install httpd and php at once]
+yum install gcc glibc glibc-common -y -----
+yum install gd gd-devel -y
+
+--- now create a new user
+useradd nagios
+passwd nagios -----[give the password]
+
+--- now create a new group
+groupadd nagioscmd
+usermod -a -G nagioscmd nagios
+usermod -a -G nagioscmd apache -----[to create 2 users nagios and apache]
+mkdir ~/downloads -----[to createa downloads dir.]
+cd ~/downloads
+
+--- now download the nagios and nagios pluins in this dir.
+wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz -----[to download the pkg]
+wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz -----[to download the plugins]
+tar -zxvf nagios-4.4.3.tar.gz -----[to extract the downloaded pkg]
+cd nagios-4.4.3
+
+--- to configure
+./configure --with-command-group=nagioscmd
+make all
+make install
+make install-init
+make install-config
+make install-commandmode
+
+vim /usr/local/nagios/etc/objects/contacts.cfg  -----[to change the admin, emails etc]----- no need this step now
+
+make install-webconf
+htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin -----[to create admin account]
+service httpd restart
+
+--- no install plugins
+cd ~/downloads
+tar zxvf nagios-plugins-2.0.3.tar.gz
+cd nagios-plugins-2.0.3
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+
+chkconfig --add nagios
+chkconfig nagios on
+
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+
+service nagios start
+service httpd restart
+
+--- now login to th nagios webopage
+open newtab in browser and paste the ec2 ip
+http://pasteIPofEC2here/nagios/
+username : nagiosadmin
+password : 2563
+Dasboard opens
+
+
+INTEGRATIONG NAGIOS WITH JENINS
+
+jenkins dashboard--manage jenkins
+manage plugins
+search for "BUILD MONITOR VIEW"
+install without restart
+--- now back to dashboard 
+clik on + to create a new view here we can see the plugin prviously installed
+give nay name : BUILD_DEMO
+select build monitor view
+OK
+--- select the job to monitor
